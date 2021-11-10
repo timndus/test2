@@ -20,6 +20,13 @@ class RepositoryServiceProvider extends ServiceProvider
         );
         // # end Account
 
+		// # start Auth
+		$this->app->bind(
+            'App\Interfaces\Repositories\Default\IAuthRepository',
+            'App\Repositories\Redis\Default\AuthRepository'
+        );
+        // # end Auth
+
 		// # pattern:create
     }
 
