@@ -13,6 +13,13 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+		// # start Account
+		$this->app->bind(
+            'App\Interfaces\Repositories\Default\IAccountRepository',
+            'App\Repositories\Redis\Default\AccountRepository'
+        );
+        // # end Account
+
 		// # pattern:create
     }
 
