@@ -40,6 +40,10 @@ class MainService
         }
     }
 
+    public static function generateRandomString($len) {
+        return Str::random($len);
+    }
+
     public static function generateRandomNumber($min_number, $max_number) {
         return rand($min_number, $max_number);
     }

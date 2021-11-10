@@ -12,4 +12,8 @@ class AuthController extends Controller
         protected IAuthRepository $repository
     ) {}
     
+    public function create(Request $request) {
+        $auth = $this->repository->create($request->username, $request->password);
+        return res($auth);
+    }
 }
