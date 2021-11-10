@@ -12,4 +12,10 @@ class AccountController extends Controller
         protected IAccountRepository $repository
     ) {}
     
+    public function create(Request $request) {
+        $id = $this->repository->create($request->username, $request->password);
+        return res([
+            'id' => $id
+        ]);
+    }
 }

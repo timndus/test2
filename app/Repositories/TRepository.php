@@ -35,19 +35,6 @@ trait TRepository {
         }
     }
 
-    protected function checkPassword(string $password): void {
-        MainService::checkPassword($password);
-    }
-
-    public function checkIsNotRegistered($email) {
-        $id = $this->getId([
-            'email' => $email
-        ]);
-        if($id) {
-            err($this->setting::HTTP_CODE_UNPROCESSABLE_ENTITY, $this->setting::IS_REGISTERED);
-        }
-    }
-
     public function getIdOrFail(int | null | array $queries): int {
         $id = $this->getId($queries);
         if($id) {
