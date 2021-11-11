@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Default;
 
-use App\Settings\Setting;
+use App\Services\MainService;
 
-class ProcessService
+class ProcessService implements \App\Interfaces\Services\Default\IProcessService
 {
     public function getRunningProcessList(): array {
         $result = MainService::runScript('get-running-process-list.sh');

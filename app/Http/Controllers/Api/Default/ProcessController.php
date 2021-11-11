@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api\Default;
 
-use Facades\App\Services\ProcessService;
+use App\Interfaces\Services\Default\IProcessService;
 
 class ProcessController extends Controller
 {
-    public function __construct() {}
+    public function __construct(
+        protected IProcessService $service
+    ) {}
     
     public function getRunningProcessList() {
-        $list = ProcessService::getRunningProcessList();
+        $list = $this->service->getRunningProcessList();
         return res($list);
     }
 }
