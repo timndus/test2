@@ -66,15 +66,5 @@ class MainService
     public static function getCurrentEpoch() {
         return microtime(true);
     }
-    
-    public static function isName(string $name, int $len_min, int $len_max): bool {
-        /**
-         * starts with [a-zA-Z0-9]
-         * may contain [- _] but must be followed by a [a-zA-Z0-9]
-         */
-
-        $pattern = '/^([a-zA-Z0-9]+([- _][a-zA-Z0-9]+)*){' . $len_min . ',' . $len_max . '}$/';
-        return preg_match($pattern, $name) ? true : false;
-    }
 
 }
