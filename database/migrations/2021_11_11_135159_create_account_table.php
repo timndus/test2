@@ -15,7 +15,7 @@ class CreateAccountTable extends Migration
     {
         Schema::create('account', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 64);
+            $table->string('username', 64)->unique();
             $table->string('password', 64);
             $table->unsignedInteger('created_at');
         });
