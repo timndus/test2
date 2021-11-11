@@ -18,7 +18,7 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
             err($this->setting::HTTP_CODE_CONFLICT, $this->setting::DIRECTORY_EXISTS);
         }
 
-        if(!Storage::makeDirectory($path)) {
+        if(!File::makeDirectory($path)) {
             err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
         }
     }
