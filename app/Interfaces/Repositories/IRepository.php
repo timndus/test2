@@ -5,6 +5,7 @@ namespace App\Interfaces\Repositories;
 interface IRepository {
     public function store(array $info): int;
     public function find(int | null | array $queries, int $v = 0): ?array;
+    public function findOrFail(int | null | array $queries): array;
     public function getId(int | null | array $queries): ?int;
     public function getIdOrFail(int | null | array $queries): int;
     public function all(array $queries = [], int $v = 0): array;

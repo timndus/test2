@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api\Default;
 
 use Illuminate\Http\Request;
-use Facades\App\Services\DirectoryService;
+
+use App\Interfaces\Services\Default\IDirectoryService;
 
 class DirectoryController extends Controller
 {
-    public function __construct() {}
+    public function __construct(
+        protected IDirectoryService $service
+    ) {}
     
     public function create(Request $request) {
-        DirectoryService::create($request->auth['account_id'], $request->name);
+        $this->service->create($request->auth['account_id'], $request->name);
 
         return res([
             'msg' => 'done'
@@ -18,7 +21,7 @@ class DirectoryController extends Controller
     }
 
     public function index(Request $request) {
-        $list = DirectoryService::getList($request->auth['account_id']);
+        $list = $this->service->getList($request->auth['account_id']);
 
         return res($list);
     }

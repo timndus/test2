@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Settings\Setting;
 use Illuminate\Support\Facades\Storage;
 
-class FileSystemService
+class FileSystemService implements \App\Interfaces\Services\IFileSystemService
 {
     public function createDirectory(string $path): void {
         if(!Storage::makeDirectory($path)) {
