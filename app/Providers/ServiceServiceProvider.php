@@ -19,14 +19,20 @@ class ServiceServiceProvider extends ServiceProvider
 		);
 
 		$this->app->bind(
+			'App\Interfaces\Services\IFileSystemService',
+			'App\Services\FileSystemService'
+		);
+
+		$this->app->bind(
 			'App\Interfaces\Services\Default\IDirectoryService',
 			'App\Services\Default\DirectoryService'
 		);
 
 		$this->app->bind(
-			'App\Interfaces\Services\IFileSystemService',
-			'App\Services\FileSystemService'
+			'App\Interfaces\Services\Default\IFileService',
+			'App\Services\Default\FileService'
 		);
+		
 	}
 
 	/**
