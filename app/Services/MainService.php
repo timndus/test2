@@ -4,9 +4,24 @@ namespace App\Services;
 
 use App\Settings\Setting;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Process;
 
 class MainService
 {
+    public static function runScript(string $name): mixed {
+        $process = new Process(['sh', __DIR__ . '/../Scripts/' . $name]);
+        $process->run();
+
+        // executes after the command finishes
+        if(!$process->isSuccessful()) {
+            err(Setting::HTTP_CODE_INTERNAL_SERVER_ERROR, setting::INTERNAL_SERVER_ERROR);
+        } else {
+            $result = $process->getOutput();
+        }
+
+        return $result;
+    }
+
     public static function filter($entity, $keys, $except = false) {
         if(!$entity) {
             return $entity;
