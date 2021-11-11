@@ -4,6 +4,7 @@ namespace App\Repositories\Redis\Default;
 
 use App\Services\MainService;
 use App\Settings\Default\AccountSetting;
+use Facades\App\Services\FileSystemService;
 
 class AccountRepository extends \App\Repositories\Redis\AccountRepository implements \App\Interfaces\Repositories\Default\IAccountRepository
 {
@@ -18,10 +19,17 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
         $this->checkIsNotRegistered($username);
         $this->checkPassword($password);
 
+        $this->createHomeDirectory($username);
+
         return parent::store([
             'username' => $username,
             'password' => $password
         ]);
+    }
+
+    private function createHomeDirectory(string $username): void {
+        $path = '/opt/myprogram/' . $username;
+        FileSystemService::createDirectory($path);
     }
 
     private function checkUsername(?string $username): void {
