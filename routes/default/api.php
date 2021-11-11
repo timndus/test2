@@ -41,6 +41,10 @@ $router->group(['prefix' => '/directory'], function() use($router){
         $router->post('/',
             [DirectoryController::class, 'create']
         );
+
+        $router->get('/',
+            [DirectoryController::class, 'index']
+        );
     });
     
 });

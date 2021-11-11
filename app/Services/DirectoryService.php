@@ -17,6 +17,15 @@ class DirectoryService
         FileSystemService::createDirectory($path);
     }
 
+    public function getList(int $account_id): array {
+        $username = AccountRepository::findOrFail($account_id)['username'];
+        
+        $path = '/opt/myprogram/' . $username;
+        $list = FileSystemService::getDirectoryList($path);
+
+        return $list;
+    }
+
     private function checkName(?string $name): void {
         if(!$this->isName($name)) {
             err(DirectorySetting::HTTP_CODE_UNPROCESSABLE_ENTITY, DirectorySetting::NAME_INVALID);

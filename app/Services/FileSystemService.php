@@ -12,4 +12,8 @@ class FileSystemService
             err(Setting::HTTP_CODE_INTERNAL_SERVER_ERROR, Setting::INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function getDirectoryList(string $path): array {
+        return Storage::directories($path);
+    }
 }

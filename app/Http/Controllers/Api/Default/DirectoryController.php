@@ -16,4 +16,10 @@ class DirectoryController extends Controller
             'msg' => 'done'
         ]);
     }
+
+    public function index(Request $request) {
+        $list = DirectoryService::getList($request->auth['account_id']);
+
+        return res($list);
+    }
 }
