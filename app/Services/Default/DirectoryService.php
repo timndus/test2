@@ -19,7 +19,7 @@ class DirectoryService implements \App\Interfaces\Services\Default\IDirectorySer
 
         $username = $this->accountRepository->findOrFail($account_id)['username'];
 
-        $path = '/opt/myprogram/' . $username . '/' . $name;
+        $path = base_path() . '/storage/app/opt/myprogram/' . $username . '/' . $name;
         $this->fileSystemService->createDirectory($path);
     }
 

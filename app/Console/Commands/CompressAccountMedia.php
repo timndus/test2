@@ -50,8 +50,9 @@ class CompressAccountMedia extends Command
         foreach ($id_list as $id) {
             $file_list = FileService::getList($id);
     
-            $path = base_path() . '/storage/app/opt/backups/' . 'a' . $id . '-' . MainService::getCurrentEpoch(false) . '.zip';
-            FileSystemService::createZip($file_list, $path);
+            $path = base_path() . '/storage/app/opt/backups';
+            $name = 'a' . $id . '-' . MainService::getCurrentEpoch(false) . '.zip';
+            FileSystemService::createZip($file_list, $path, $name);
         }
 
         return Command::SUCCESS;

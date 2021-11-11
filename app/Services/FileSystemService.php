@@ -14,7 +14,7 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
     ) {}
 
     public function createDirectory(string $path): void {
-        if(File::isDirectory(__DIR__ . '/../../storage/app' . $path)) {
+        if(File::isDirectory($path)) {
             err($this->setting::HTTP_CODE_CONFLICT, $this->setting::DIRECTORY_EXISTS);
         }
 
@@ -41,19 +41,24 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
         return Storage::files($path);
     }
 
-    public function createZip(array $list, string $path): void {
-        if(File::isFile($path)) {
+    public function createZip(array $list, string $path, string $name): void {
+        if(!File::isDirectory($path)) {
+            $this->createDirectory($path);
+        }
+
+        $full_path = $path . '/' . $name;
+        if(File::isFile($full_path)) {
             err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
         }
         
         $zip = new ZipArchive();
-        if($zip->open($path, ZipArchive::CREATE) !== TRUE) {
+        if($zip->open($full_path, ZipArchive::CREATE) !== TRUE) {
             err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
         }
 
         foreach ($list as $name) {
-            $path = base_path() . '/storage/app/' . $name;
-            $zip->addFile($path);
+            $full_path = base_path() . '/storage/app/' . $name;
+            $zip->addFile($full_path);
         }
 
         $zip->close(); 

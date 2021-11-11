@@ -28,7 +28,7 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
     }
 
     private function createHomeDirectory(string $username): void {
-        $path = '/opt/myprogram/' . $username;
+        $path = base_path() . '/storage/app/opt/myprogram/' . $username;
         FileSystemService::createDirectory($path);
     }
 
