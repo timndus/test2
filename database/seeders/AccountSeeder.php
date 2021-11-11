@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Interfaces\Repositories\Default\IAccountRepository;
 use Illuminate\Database\Seeder;
-
-use App\Models\Account;
 use App\Services\MainService;
 
 class AccountSeeder extends Seeder
 {
+    public function __construct(
+        private IAccountRepository $accountRepository
+    ) {}
+
     /**
      * Run the database seeds.
      *
@@ -16,12 +19,13 @@ class AccountSeeder extends Seeder
      */
     public function run()
     {
-        $account = Account::factory()->create([
-            'username' => 'parspack',
-            'password' => '123456',
-            'created_at' => MainService::getCurrentEpoch()
-        ]);
+        // $account = Account::factory()->create([
+        //     'username' => 'parspack',
+        //     'password' => '123456',
+        //     'created_at' => MainService::getCurrentEpoch()
+        // ]);
 
-        echo 'account #' . $account->id . ' created' . PHP_EOL;
+        $id = $this->accountRepository->create('parspack', '123456');
+        echo 'account #' . $id . ' created' . PHP_EOL;
     }
 }

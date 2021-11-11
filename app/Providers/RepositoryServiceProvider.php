@@ -16,7 +16,7 @@ class RepositoryServiceProvider extends ServiceProvider
 		// # start Account
 		$this->app->bind(
             'App\Interfaces\Repositories\Default\IAccountRepository',
-            'App\Repositories\QueryBuilder\Default\AccountRepository'
+            'App\Repositories\Redis\Default\AccountRepository'
         );
         // # end Account
 
