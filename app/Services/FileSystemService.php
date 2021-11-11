@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Settings\FileSystemSetting;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use ZipArchive;
 
 class FileSystemService implements \App\Interfaces\Services\IFileSystemService
 {
@@ -38,5 +39,26 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
 
     public function getFileList(string $path): array {
         return Storage::files($path);
+    }
+
+    public function createZip(array $list, string $zip_name): void {
+        $zip = new ZipArchive();
+
+        $path = base_path() . '/storage/app/opt/backups/' . $zip_name . '.zip';
+
+        if(File::isFile($path)) {
+            err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
+        }
+
+        if($zip->open($path, ZipArchive::CREATE) !== TRUE) {
+            err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
+        }
+
+        foreach ($list as $name) {
+            $path = base_path() . '/storage/app/' . $name;
+            $zip->addFile($path);
+        }
+
+        $zip->close(); 
     }
 }

@@ -63,8 +63,9 @@ class MainService
         return rand($min_number, $max_number);
     }
 
-    public static function getCurrentEpoch() {
-        return microtime(true);
+    public static function getCurrentEpoch($nano = true) {
+        $epoch = microtime(true);
+        return $nano ? $epoch : round($epoch);
     }
 
 }
