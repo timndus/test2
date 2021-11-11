@@ -22,4 +22,8 @@ class FileSystemService
     public function getDirectoryList(string $path): array {
         return Storage::directories($path);
     }
+
+    public function getFileList(string $path): array {
+        return Storage::files($path);
+    }
 }

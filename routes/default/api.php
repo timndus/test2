@@ -57,6 +57,10 @@ $router->group(['prefix' => '/file'], function() use($router){
         $router->post('/',
             [FileController::class, 'create']
         );
+
+        $router->get('/',
+            [FileController::class, 'index']
+        );
     });
     
 });

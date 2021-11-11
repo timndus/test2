@@ -17,6 +17,15 @@ class FileService
         FileSystemService::createFile($path);
     }
 
+    public function getList(int $account_id): array {
+        $username = AccountRepository::findOrFail($account_id)['username'];
+        
+        $path = '/opt/myprogram/' . $username;
+        $list = FileSystemService::getFileList($path);
+
+        return $list;
+    }
+
     private function checkName(?string $name): void {
         if(!$this->isName($name)) {
             err(FileSetting::HTTP_CODE_UNPROCESSABLE_ENTITY, FileSetting::NAME_INVALID);
