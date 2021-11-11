@@ -13,6 +13,12 @@ class FileSystemService
         }
     }
 
+    public function createFile(string $path): void {
+        if(!Storage::put($path, 'test')) {
+            err(Setting::HTTP_CODE_INTERNAL_SERVER_ERROR, Setting::INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function getDirectoryList(string $path): array {
         return Storage::directories($path);
     }
