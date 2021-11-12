@@ -38,7 +38,7 @@ class BackupAccountMedia implements ShouldQueue
         
         $file_list = FileService::getList($this->account_id);
         $path = base_path() . '/storage/app/opt/backups/' . $account['username'];
-        $name = MainService::getCurrentEpoch(false) . '.zip';
+        $name = date('Y-m-d', time()) . '.zip';
         FileSystemService::createZip($file_list, $path, $name);
     }
 }

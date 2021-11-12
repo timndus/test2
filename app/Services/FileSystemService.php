@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Settings\FileSystemSetting;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use ZipArchive;
 
 class FileSystemService implements \App\Interfaces\Services\IFileSystemService
@@ -48,7 +49,8 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
 
         $full_path = $path . '/' . $name;
         if(File::isFile($full_path)) {
-            err($this->setting::HTTP_CODE_INTERNAL_SERVER_ERROR, $this->setting::INTERNAL_SERVER_ERROR);
+            Log::info(PHP_EOL . 'Zip (' . $full_path . ') already exists');
+            return;
         }
         
         $zip = new ZipArchive();
