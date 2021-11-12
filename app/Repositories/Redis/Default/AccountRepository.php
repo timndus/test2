@@ -13,7 +13,14 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
     public function __construct(
         public AccountSetting $setting
     ) {}
-
+    
+    /**
+     * create
+     *
+     * @param  string $username
+     * @param  string $password
+     * @return int id of created account
+     */
     public function create(?string $username, ?string $password): int {
         $this->checkUsername($username);
         $this->checkIsNotRegistered($username);
@@ -26,7 +33,13 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
             'password' => $password
         ]);
     }
-
+    
+    /**
+     * createHomeDirectory
+     *
+     * @param  string $username every account has a direcotry to store files or directories
+     * @return void
+     */
     private function createHomeDirectory(string $username): void {
         $path = base_path() . '/storage/app/opt/myprogram/' . $username;
         FileSystemService::createDirectory($path);
@@ -37,15 +50,18 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
             err($this->setting::HTTP_CODE_UNPROCESSABLE_ENTITY, $this->setting::USERNAME_INVALID);
         }
     }
-
+    
+    /**
+     * isValidUsername
+     *
+     * @param  string $username
+     * * Only contains alphanumeric characters, underscore and dot.
+     * * Underscore and dot can't be at the end or start of a username (e.g _username / username_ / .username / username.).
+     * * Underscore and dot can't be next to each other (e.g user_.name).
+     * * Underscore or dot can't be used multiple times in a row (e.g user__name / user..name).
+     * @return bool
+     */
     private function isValidUsername(?string $username): bool {
-        /**
-         *  Only contains alphanumeric characters, underscore and dot.
-         *  Underscore and dot can't be at the end or start of a username (e.g _username / username_ / .username / username.).
-         *  Underscore and dot can't be next to each other (e.g user_.name).
-         *  Underscore or dot can't be used multiple times in a row (e.g user__name / user..name).
-         */
-
         $min = $this->setting::USERNAME_LEN_MIN;
         $max = $this->setting::USERNAME_LEN_MAX;
 
@@ -70,7 +86,7 @@ class AccountRepository extends \App\Repositories\Redis\AccountRepository implem
             err($this->setting::HTTP_CODE_UNPROCESSABLE_ENTITY, $this->setting::PASSWORD_INVALID);
         }
     }
-
+    
     private function isValidPassword(?string $password): bool {
         if(MainService::isValidLength($password, $this->setting::PASSWORD_LEN_MIN, $this->setting::PASSWORD_LEN_MAX)) {
             return true;

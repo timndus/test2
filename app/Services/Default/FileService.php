@@ -13,7 +13,14 @@ class FileService implements \App\Interfaces\Services\Default\IFileService
         private IFileSystemService $fileSystemService,
         private FileSetting $setting
     ) {}
-
+    
+    /**
+     * create
+     *
+     * @param  int $account_id used to generate the path of created file
+     * @param  string $name Ex: file1
+     * @return void
+     */
     public function create(int $account_id, ?string $name): void {
         $this->checkName($name);
 
@@ -22,7 +29,13 @@ class FileService implements \App\Interfaces\Services\Default\IFileService
         $path = '/opt/myprogram/' . $username . '/' . $name;
         $this->fileSystemService->createFile($path);
     }
-
+    
+    /**
+     * getList
+     *
+     * @param  int $account_id
+     * @return array Ex: ["opt/myprogram/parspack/file1", "opt/myprogram/parspack/file2"]
+     */
     public function getList(int $account_id): array {
         $username = $this->accountRepository->findOrFail($account_id)['username'];
         
@@ -37,13 +50,16 @@ class FileService implements \App\Interfaces\Services\Default\IFileService
             err($this->setting::HTTP_CODE_UNPROCESSABLE_ENTITY, $this->setting::NAME_INVALID);
         }
     }
-
+    
+    /**
+     * is a valid syntax for file name
+     *
+     * @param  string $name
+     * * starts with [a-zA-Z0-9]
+     * * may contain [- _] but must be followed by a [a-zA-Z0-9]
+     * @return bool
+     */
     private function isName(?string $name): bool {
-        /**
-         * starts with [a-zA-Z0-9]
-         * may contain [- _] but must be followed by a [a-zA-Z0-9]
-         */
-
         $len_min = $this->setting::LEN_MIN;
         $len_max = $this->setting::LEN_MAX;
 

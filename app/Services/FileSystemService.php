@@ -13,7 +13,13 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
     public function __construct(
         private FileSystemSetting $setting
     ) {}
-
+    
+    /**
+     * createDirectory
+     *
+     * @param  string $path Ex: /var/www/html/newdir
+     * @return void
+     */
     public function createDirectory(string $path): void {
         if(File::isDirectory($path)) {
             err($this->setting::HTTP_CODE_CONFLICT, $this->setting::DIRECTORY_EXISTS);
@@ -41,7 +47,20 @@ class FileSystemService implements \App\Interfaces\Services\IFileSystemService
     public function getFileList(string $path): array {
         return Storage::files($path);
     }
-
+    
+    /**
+     * create a zip file
+     *
+     * @param  array $list Ex: ['opt/myprogram/parspack/file1', 'opt/myprogram/parspack/file2']
+     * 
+     * parent directory of files should be the /storage/app/direcotry
+     * 
+     * @param  string $path Ex: /var/www/storage/app/opt/backups/parspack
+     * 
+     * @param  string $name Ex: myzip.zip
+     * 
+     * @return void
+     */
     public function createZip(array $list, string $path, string $name): void {
         if(!File::isDirectory($path)) {
             $this->createDirectory($path);

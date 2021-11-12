@@ -8,7 +8,7 @@ class PatternDelete extends Command
 {
     protected $signature = 'pattern:delete {name}';
 
-    protected $description = 'Delete pattern';
+    protected $description = 'Delete the custom structure';
 
     public function __construct()
     {

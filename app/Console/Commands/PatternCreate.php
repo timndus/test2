@@ -9,7 +9,7 @@ class PatternCreate extends Command
 {
     protected $signature = 'pattern:create {name}';
 
-    protected $description = 'Creating my customized pattern';
+    protected $description = 'Creating my customized structure';
 
     protected $name;
 

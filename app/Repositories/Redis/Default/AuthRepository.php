@@ -14,7 +14,14 @@ class AuthRepository extends \App\Repositories\Redis\AuthRepository implements \
         public AuthSetting $setting,
         private IAccountRepository $accountRepository
     ) {}
-
+    
+    /**
+     * create
+     *
+     * @param  string $username
+     * @param  string $password
+     * @return array Ex [id: 3, token: "sometokenhere"]
+     */
     public function create(?string $username, ?string $password): array {
         $account_id = $this->checkAccountExist($username, $password);
 

@@ -5,7 +5,12 @@ namespace App\Services\Default;
 use App\Services\MainService;
 
 class ProcessService implements \App\Interfaces\Services\Default\IProcessService
-{
+{    
+    /**
+     * getRunningProcessList
+     *
+     * @return array Ex: ['htop', 'ps']
+     */
     public function getRunningProcessList(): array {
         $result = MainService::runScript('get-running-process-list.sh');
 

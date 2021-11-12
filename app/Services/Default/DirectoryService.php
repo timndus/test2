@@ -14,6 +14,13 @@ class DirectoryService implements \App\Interfaces\Services\Default\IDirectorySer
         private DirectorySetting $setting
     ) {}
 
+    /**
+     * create
+     *
+     * @param  int $account_id used to generate the path of created directory
+     * @param  string $name Ex: dir1
+     * @return void
+     */
     public function create(int $account_id, ?string $name): void {
         $this->checkName($name);
 
@@ -23,6 +30,12 @@ class DirectoryService implements \App\Interfaces\Services\Default\IDirectorySer
         $this->fileSystemService->createDirectory($path);
     }
 
+    /**
+     * getList
+     *
+     * @param  int $account_id
+     * @return array Ex: ["opt/myprogram/parspack/dir1", "opt/myprogram/parspack/dir2"]
+     */
     public function getList(int $account_id): array {
         $username = $this->accountRepository->findOrFail($account_id)['username'];
         
@@ -38,12 +51,15 @@ class DirectoryService implements \App\Interfaces\Services\Default\IDirectorySer
         }
     }
 
+    /**
+     * is a valid syntax for directory name
+     *
+     * @param  string $name
+     * * starts with [a-zA-Z0-9]
+     * * may contain [- _] but must be followed by a [a-zA-Z0-9]
+     * @return bool
+     */
     private function isName(?string $name): bool {
-        /**
-         * starts with [a-zA-Z0-9]
-         * may contain [- _] but must be followed by a [a-zA-Z0-9]
-         */
-
         $len_min = $this->setting::LEN_MIN;
         $len_max = $this->setting::LEN_MAX;
 

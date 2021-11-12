@@ -18,7 +18,12 @@ class JobStart extends Command
     ) {
         parent::__construct();
     }
-
+    
+    /**
+     * just dispatching a job
+     *
+     * @return void
+     */
     public function handle() {
         $name = $this->argument('name');
         switch ($name) {
