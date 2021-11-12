@@ -29,6 +29,6 @@ https://documenter.getpostman.com/view/15140354/UVC8C65N
 - Redis
 - Horizon
 - Supervisor
-- php8
-- nginx
-- ubuntu server 20.04
+- Php8
+- Nginx
+- Ubuntu server 20.04
