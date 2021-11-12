@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\Default;
 use Illuminate\Http\Request;
 
 use App\Interfaces\Services\Default\IDirectoryService;
+use App\Settings\Default\DirectorySetting;
 
 class DirectoryController extends Controller
 {
     public function __construct(
-        protected IDirectoryService $service
+        protected IDirectoryService $service,
+        private DirectorySetting $setting
     ) {}
     
     public function create(Request $request) {
@@ -17,7 +19,7 @@ class DirectoryController extends Controller
 
         return res([
             'msg' => 'done'
-        ]);
+        ], $this->setting::HTTP_CODE_CREATED);
     }
 
     public function index(Request $request) {
